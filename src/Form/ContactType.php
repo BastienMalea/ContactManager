@@ -42,7 +42,11 @@ class ContactType extends AbstractType
                 'label' => 'Numéro de téléphone',
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
-                    new Assert\Length(['min' => 10, 'max' => 10])
+                    new Assert\Length(['min' => 10, 'max' => 10]),
+                    new Assert\Regex([
+                        'pattern' => '/^\d{10}$/',
+                        'message' => 'Le numéro de téléphone doit être composé de 10 chiffres.'
+                    ])
                 ]
             ])
             ->add('email', EmailType::class, [

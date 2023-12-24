@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +29,24 @@ class ContactController extends AbstractController
     }
 
     #[Route('/new', name: 'contact.new', methods: ['GET', 'POST'])]
-    public function new() : Response
+    public function new(Request $request, EntityManagerInterface $manager) : Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $contact = $form->getData();
+            $manager->persist($contact);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le contact a bien été ajouté !'
+            );
+
+            $this->redirectToRoute('contact.index');
+        }
 
         return $this->render('pages/contact/new.html.twig',[
             'form' => $form->createView()
