@@ -6,25 +6,72 @@ use App\Entity\Contact;
 use App\Entity\Group;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('firstname')
-            ->add('phoneNumber')
-            ->add('email')
-            ->add('photo')
-            ->add('memberGroups', EntityType::class, [
-                'class' => Group::class,
-'choice_label' => 'id',
-'multiple' => true,
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control', 'minlength' => 2, 'maxlength' => 50],
+                'label' => 'Nom',
+                'label_attr' => ['class' => 'form-label mt-4'],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 50]),
+                    new Assert\NotBlank()
+                ]
             ])
-        ;
+            ->add('firstname', TextType::class, [
+                'attr' => ['class' => 'form-control', 'minlength' => 2, 'maxlength' => 50],
+                'label' => 'Prénom',
+                'label_attr' => ['class' => 'form-label mt-4'],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 50])
+                ]
+            ])
+            ->add('phoneNumber', TextType::class, [
+                'attr' => ['class' => 'form-control', 'minlength' => 10, 'maxlength' => 10],
+                'label' => 'Numéro de téléphone',
+                'label_attr' => ['class' => 'form-label mt-4'],
+                'constraints' => [
+                    new Assert\Length(['min' => 10, 'max' => 10])
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Email',
+                'label_attr' => ['class' => 'form-label mt-4'],
+                'constraints' => [
+                    new Assert\Email(['message' => 'L\'email "{{ value }}" n\'est pas un email valide.'])
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary mt-4'],
+                'label' => 'Ajouter mon contact'
+            ]);
+
+
+
+//            ->add('photo', FileType::class, [
+//                'label' => 'Photo de profil (Fichier image)',
+//                'label_attr' => ['class' => 'form-label mt-4'],
+//                'required' => false,
+//                'mapped' => false, // Si le champ n'est pas directement mappé à la propriété de l'entité
+//            ])
+//            ->add('memberGroups', EntityType::class, [
+//                'class' => Group::class,
+//'choice_label' => 'id',
+//'multiple' => true,
+//            ])
+//        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

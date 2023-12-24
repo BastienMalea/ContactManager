@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
+use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +30,12 @@ class ContactController extends AbstractController
     #[Route('/new', name: 'contact.new', methods: ['GET', 'POST'])]
     public function new() : Response
     {
-        return $this->render('pages/contact/new.html.twig');
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+
+        return $this->render('pages/contact/new.html.twig',[
+            'form' => $form->createView()
+            ]
+        );
     }
 }
