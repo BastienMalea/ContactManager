@@ -53,4 +53,28 @@ class ContactController extends AbstractController
             ]
         );
     }
+
+    #[Route('/edit/{id}', name: 'contact.edit', methods: ['GET', 'POST'])]
+    public function update(Contact $contact, Request $request, EntityManagerInterface $manager) : Response{
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $contact = $form->getData();
+            $manager->persist($contact);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le contact a bien été modifié !'
+            );
+
+            return $this->redirectToRoute('contact.index');
+        }
+
+        return $this->render('/pages/contact/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }

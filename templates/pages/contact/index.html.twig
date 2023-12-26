@@ -13,6 +13,8 @@
             </h4>
         </div>
 
+        <a href="{{ path('contact.new') }}" class="btn btn-primary"> Ajouter un nouveau contact</a>
+        
         <table class="table table-hover">
             <thead>
             <tr>
@@ -20,6 +22,7 @@
                 <th scope="col">Nom et Prénom</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Email</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -40,6 +43,10 @@
                         {% else %}
                             <p>Pas d'adresse email renseignée</p>
                         {% endif %}
+                    </td>
+                    <td>
+                        <!-- Bouton ou lien vers la route de modification -->
+                        <a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-primary">Modifier</a>
                     </td>
                 </tr>
             {% endfor %}
