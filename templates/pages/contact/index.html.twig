@@ -23,6 +23,7 @@
                 <th scope="col">Numéro</th>
                 <th scope="col">Email</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -45,8 +46,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        <!-- Bouton ou lien vers la route de modification -->
-                        <a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-primary">Modifier</a>
+                        <a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-info ">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('contact.delete', {'id': contact.id}) }}" class="btn btn-warning">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}

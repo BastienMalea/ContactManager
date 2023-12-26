@@ -77,4 +77,17 @@ class ContactController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/delete/{id}', name: 'contact.delete', methods: ['GET'])]
+    public function delete(Contact $contact, EntityManagerInterface $manager) : Response{
+        $manager->remove($contact);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Le contact a bien été modifié !'
+        );
+
+        return $this->redirectToRoute('contact.index');
+    }
 }
