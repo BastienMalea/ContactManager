@@ -45,7 +45,7 @@ class ContactController extends AbstractController
                 'Le contact a bien été ajouté !'
             );
 
-            $this->redirectToRoute('contact.index');
+            return $this->redirectToRoute('contact.index');
         }
 
         return $this->render('pages/contact/new.html.twig',[

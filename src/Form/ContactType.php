@@ -52,8 +52,13 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Email',
+                'required' => false,
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Veuillez entrer une adresse email.',
+                        'allowNull' => true
+                    ]),
                     new Assert\Email(['message' => 'L\'email "{{ value }}" n\'est pas un email valide.'])
                 ]
             ])

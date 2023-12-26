@@ -34,7 +34,13 @@
                     </td>
                     <td>{{ contact.name }} {{ contact.firstname }}</td>
                     <td>{{ contact.phoneNumber }}</td>
-                    <td>{{ contact.email }}</td>
+                    <td>
+                        {% if contact.email %}
+                            {{ contact.email }}
+                        {% else %}
+                            <p>Pas d'adresse email renseignée</p>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
