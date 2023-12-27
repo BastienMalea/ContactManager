@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Contact;
 use App\Entity\Group;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -29,10 +30,15 @@ class GroupType extends AbstractType
                 'label' => 'Sélectionner les contacts que vous souhaitez ajouter dans le groupe',
                 'class' => Contact::class,
                 'choice_label' => function(Contact $contact) {
-                    return $contact->getName() . ' ' . $contact->getFirstname();
+                    return $contact->getName() . ' ' . $contact->getFirstname() . ' ' . $contact->getPhoneNumber();
                 },
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
+                'attr' => ['class' => 'form-control custom-select-multiple', 'style' => 'height:300px'],
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC'); // Trie les contacts par nom en ordre alphabétique
+                },
                 'constraints' => [
                     new Assert\Count([
                         'min' => 1,
