@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %} ContactManager - Accueil
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Mes groupes</h1>
+
+        <div class="count mt-4">
+            <h4>
+                Il y a {{ groups.getTotalItemCount }} groupes au total
+            </h4>
+        </div>
+
+        <a href="{{ path('group.new') }}" class="btn btn-primary"> Ajouter un nouveau groupe</a>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groups %}
+                <tr class="table-primary">
+                    <td>{{ group.name }}</td>
+{#                    <td>#}
+{#                        <a href="{{ path('group.edit', {'id': group.id}) }}" class="btn btn-info ">Modifier</a>#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        <a href="{{ path('group.delete', {'id': group.id}) }}" class="btn btn-warning"#}
+{#                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">Supprimer</a>#}
+{#                    </td>#}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {# display navigation #}
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(groups) }}
+    </div>
+{% endblock %}

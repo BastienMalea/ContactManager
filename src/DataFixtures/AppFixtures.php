@@ -36,10 +36,10 @@ class AppFixtures extends Fixture
             $group = new Group();
             $group->setName($this->faker->word());
 
-            // Déterminer un nombre aléatoire de contacts à ajouter au groupe
+            // Déterminer un nombre aléatoire de contacts à ajouter au group
             $numContacts = mt_rand(1, count($contacts));
             for ($k = 0; $k < $numContacts; $k++) {
-                // Sélectionner un contact aléatoire et l'ajouter au groupe
+                // Sélectionner un contact aléatoire et l'ajouter au group
                 $randomContact = $contacts[mt_rand(0, count($contacts) - 1)];
                 $group->addMember($randomContact);
             }
