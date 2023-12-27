@@ -52,4 +52,18 @@ class GroupController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/group/delete/{id}', name: 'group.delete', methods: ['GET'])]
+    public function delete(Group $group, EntityManagerInterface $manager) : Response
+    {
+        $manager ->remove($group);
+        $manager -> flush();
+
+        $this->addFlash(
+            'success',
+            'Le Groupe a bien été supprimé !'
+        );
+
+        return $this->redirectToRoute('group.index');
+    }
 }

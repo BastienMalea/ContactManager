@@ -30,10 +30,10 @@
 {#                    <td>#}
 {#                        <a href="{{ path('group.edit', {'id': group.id}) }}" class="btn btn-info ">Modifier</a>#}
 {#                    </td>#}
-{#                    <td>#}
-{#                        <a href="{{ path('group.delete', {'id': group.id}) }}" class="btn btn-warning"#}
-{#                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">Supprimer</a>#}
-{#                    </td>#}
+                    <td>
+                        <a href="{{ path('group.delete', {'id': group.id}) }}" class="btn btn-warning"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">Supprimer</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
