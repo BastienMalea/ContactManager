@@ -31,7 +31,8 @@ class ContactType extends AbstractType
                 'label' => 'Prénom',
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50])
+                    new Assert\Length(['min' => 2, 'max' => 50]),
+                    new Assert\NotBlank()
                 ]
             ])
             ->add('phoneNumber', TextType::class, [
@@ -40,6 +41,7 @@ class ContactType extends AbstractType
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
                     new Assert\Length(['min' => 10, 'max' => 10]),
+                    new Assert\NotBlank(),
                     new Assert\Regex([
                         'pattern' => '/^\d{10}$/',
                         'message' => 'Le numéro de téléphone doit être composé de 10 chiffres.'
