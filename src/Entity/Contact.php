@@ -42,9 +42,13 @@ class Contact
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'members')]
     private Collection $memberGroups;
 
+    #[ORM\ManyToMany(targetEntity: CustomField::class, inversedBy: 'contacts')]
+    private Collection $customFields;
+
     public function __construct()
     {
         $this->memberGroups = new ArrayCollection();
+        $this->customFields = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +139,30 @@ class Contact
         if ($this->memberGroups->removeElement($memberGroup)) {
             $memberGroup->removeMember($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CustomField>
+     */
+    public function getCustomFields(): Collection
+    {
+        return $this->customFields;
+    }
+
+    public function addCustomField(CustomField $customField): static
+    {
+        if (!$this->customFields->contains($customField)) {
+            $this->customFields->add($customField);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomField(CustomField $customField): static
+    {
+        $this->customFields->removeElement($customField);
 
         return $this;
     }
