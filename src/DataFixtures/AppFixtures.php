@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Contact;
+use App\Entity\CustomField;
 use App\Entity\Group;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -29,6 +30,28 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email());
             $manager->persist($contact);
             $contacts[] = $contact;
+
+            // Ajout de champs personnalisés pour les 20 premiers contacts
+            if ($i < 20) {
+                $customField1 = new CustomField();
+                $customField1->setName('adresse');
+                $customField1->setValue($this->faker->address());
+                $contact->addCustomField($customField1);
+
+                $customField2 = new CustomField();
+                $customField2->setName('taille');
+                $customField2->setValue($this->faker->numberBetween(150, 200) . ' cm');
+                $contact->addCustomField($customField2);
+
+                $customField3 = new CustomField();
+                $customField3->setName('poids');
+                $customField3->setValue($this->faker->numberBetween(40, 120) . ' kg');
+                $contact->addCustomField($customField3);
+
+                $manager->persist($customField1);
+                $manager->persist($customField2);
+                $manager->persist($customField3);
+            }
         }
 
         // Création des groupes et assignement des contacts aléatoirement

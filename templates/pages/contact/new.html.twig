@@ -44,6 +44,19 @@
             </div>
         </div>
 
+        <h3>Champs Personnalisés</h3>
+
+        <div id="custom-fields-container" data-prototype="{{ form_widget(form.customFields.vars.prototype)|e('html_attr') }}">
+            {% for customFieldForm in form.customFields %}
+                <div class="custom-field-item">
+                    {{ form_row(customFieldForm) }}
+                    <button type="button" class="remove-custom-field btn btn-danger">Supprimer</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="add-custom-field" class="btn btn-light">Ajouter un champ personnalisé</button>
+
         <div class="form-group">
             {{ form_row(form.submit) }}
         </div>
