@@ -16,19 +16,19 @@ class Contact
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 50)]
     #[Assert\Length(min: 2, max: 50)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 2, max: 50)]
-    private ?string $firstname = null;
+    private string $firstname;
 
-    #[ORM\Column(length: 10, nullable: true)]
+    #[ORM\Column(length: 10)]
     #[Assert\Length(min: 10, max: 10)]
-    private ?string $phoneNumber = null;
+    private string $phoneNumber;
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Email(

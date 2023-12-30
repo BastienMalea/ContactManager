@@ -13,13 +13,13 @@ class CustomField
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private string $name;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $value = null;
+    #[ORM\Column(length: 255)]
+    private string $value;
 
     #[ORM\ManyToMany(targetEntity: Contact::class, mappedBy: 'customFields')]
     private Collection $contacts;
