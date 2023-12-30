@@ -45,10 +45,32 @@ class GroupController extends AbstractController
                 'Le groupe a bien été ajouté !'
             );
 
-            return $this->redirectToRoute('contact.index');
+            return $this->redirectToRoute('group.index');
         }
 
         return $this->render('pages/group/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/group/edit/{id}', name: 'group.edit', methods: ['GET', 'POST'])]
+    public function update(Group $group, Request $request, EntityManagerInterface $manager) : Response{
+        $form = $this->createForm(GroupType::class, $group);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $group = $form->getData();
+            $manager->persist($group);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le nom du groupe a bien été modifié !'
+            );
+
+            return $this->redirectToRoute('group.index');
+        }
+
+        return $this->render('/pages/group/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }
