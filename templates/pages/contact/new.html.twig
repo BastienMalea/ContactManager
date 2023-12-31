@@ -3,11 +3,6 @@
 {% block body %}
 
     <div class="container mt-4">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
         <h1>Ajout d'un contact</h1>
 
         {{ form_start(form) }}
@@ -44,11 +39,32 @@
             </div>
         </div>
 
+        <h3>Champs Personnalisés</h3>
+        <div id="custom-fields-container"
+             data-prototype="{{ form_widget(form.customFields.vars.prototype)|e('html_attr') }}">
+
+            {% for customFieldForm in form.customFields %}
+                <div class="custom-field-item">
+                    {{ form_row(customFieldForm.name) }}
+                    {{ form_row(customFieldForm.value) }}
+                    <button type="button" class="remove-custom-field btn btn-danger">Supprimer</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="add-custom-field" class="btn btn-primary">Ajouter un champ personnalisé</button>
+
         <div class="form-group">
             {{ form_row(form.submit) }}
         </div>
 
+        {{  form_row(form._token) }} {# On s'assure que le champ de token CSRF est rendu #}
         {{ form_end(form, {'render_rest': false}) }}
     </div>
 
 {%  endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/custom-fields.js') }}"></script>
+{% endblock %}

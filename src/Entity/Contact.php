@@ -42,7 +42,7 @@ class Contact
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'members')]
     private Collection $memberGroups;
 
-    #[ORM\ManyToMany(targetEntity: CustomField::class, inversedBy: 'contacts')]
+    #[ORM\ManyToMany(targetEntity: CustomField::class, inversedBy: 'contacts', cascade: ['persist'])]
     private Collection $customFields;
 
     public function __construct()
