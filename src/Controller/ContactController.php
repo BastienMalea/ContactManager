@@ -32,7 +32,9 @@ class ContactController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager) : Response
     {
         $contact = new Contact();
-        $form = $this->createForm(ContactType::class, $contact);
+        $form = $this->createForm(ContactType::class, $contact, [
+            'action_label' => 'Ajouter le contact'
+        ]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -57,7 +59,9 @@ class ContactController extends AbstractController
     #[Route('/edit/{id}', name: 'contact.edit', methods: ['GET', 'POST'])]
     public function update(Contact $contact, Request $request, EntityManagerInterface $manager) : Response{
 
-        $form = $this->createForm(ContactType::class, $contact);
+        $form = $this->createForm(ContactType::class, $contact, [
+            'action_label' => 'Modifier le contact'
+        ]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){

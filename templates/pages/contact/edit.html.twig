@@ -44,19 +44,22 @@
             </div>
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.customFields) }}
-            {{ form_widget(form.customFields) }}
-            <div class="form-error">
-                {{ form_errors(form.customFields) }}
-            </div>
+        <h3>Champs Personnalisés</h3>
+        <div id="custom-fields-container">
+            {% for customFieldForm in form.customFields %}
+                <div class="custom-field-item">
+                    {{ form_row(customFieldForm.name) }}
+                    {{ form_row(customFieldForm.value) }}
+                </div>
+            {% endfor %}
         </div>
+
 
         <div class="form-group">
             {{ form_row(form.submit) }}
         </div>
 
-        {{ form_end(form) }}
+        {{ form_end(form, {'render_rest': false}) }}
     </div>
 
 {%  endblock %}

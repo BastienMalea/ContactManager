@@ -16,7 +16,7 @@ class CustomFieldType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control', 'minlength' => 2, 'maxlength' => 50],
-                'label' => 'Nom du champ',
+                'label' => false,
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50]),
@@ -25,7 +25,7 @@ class CustomFieldType extends AbstractType
             ])
             ->add('value', TextType::class, [
                 'attr' => ['class' => 'form-control', 'minlength' => 1, 'maxlength' => 50],
-                'label' => 'Valeur du champ',
+                'label' => false,
                 'label_attr' => ['class' => 'form-label mt-4'],
                 'constraints' => [
                     new Assert\Length(['min' => 1, 'max' => 50]),
