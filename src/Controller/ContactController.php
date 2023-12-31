@@ -38,7 +38,27 @@ class ContactController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+
             $contact = $form->getData();
+
+            $file = $form->get('photo')->getData();
+
+            if ($file) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+                try {
+                    $file->move(
+                        $this->getParameter('photos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+
+                $contact->setPhoto($newFilename);
+            }
+
             $manager->persist($contact);
             $manager->flush();
 

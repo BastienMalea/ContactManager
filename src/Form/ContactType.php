@@ -6,11 +6,13 @@ use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\File;
 
 
 class ContactType extends AbstractType
@@ -70,7 +72,22 @@ class ContactType extends AbstractType
                 'by_reference' => false,
                 'prototype' => true,
             ])
-
+            ->add('photo', FileType::class, [
+                'label' => 'Photo de profil (fichier JPG/PNG/PDF)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'application/pdf',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez télécharger un document valide (JPG/PNG/PDF).',
+                    ])
+                ],
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-4'],
                 'label' => $options['action_label']
@@ -78,12 +95,8 @@ class ContactType extends AbstractType
 
 
 
-//            ->add('photo', FileType::class, [
-//                'label' => 'Photo de profil (Fichier image)',
-//                'label_attr' => ['class' => 'form-label mt-4'],
-//                'required' => false,
-//                'mapped' => false, // Si le champ n'est pas directement mappé à la propriété de l'entité
-//            ])
+
+
 //            ->add('memberGroups', EntityType::class, [
 //                'class' => Group::class,
 //'choice_label' => 'id',

@@ -36,7 +36,7 @@
                 <tr class="table-primary">
                     <td>
                         {% if contact.photo %}
-                            <img src="{{ contact.photo }}" alt="Photo de profil" style="height: 50px; width: 50px;">
+                            <img src="{{ asset('uploads/photos/' ~ contact.photo) }}" alt="Photo de profil">
                         {% else %}
                             <img src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil par défaut" style="height: 50px; width: 50px;">
                         {% endif %}
