@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 class ContactType extends AbstractType
@@ -72,21 +73,12 @@ class ContactType extends AbstractType
                 'by_reference' => false,
                 'prototype' => true,
             ])
-            ->add('imageName', FileType::class, [
-                'label' => 'Photo de profil (fichier JPG/PNG/PDF)',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'application/pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez télécharger un document valide (JPG/PNG/PDF).',
-                    ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Photo de profil',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
                 ],
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-4'],

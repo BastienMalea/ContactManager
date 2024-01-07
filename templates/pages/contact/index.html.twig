@@ -36,9 +36,9 @@
                 <tr class="table-primary">
                     <td>
                         {% if contact.imageName %}
-                            <img src="{{ asset('uploads/photos/' ~ contact.imageName) }}" alt="Photo de profil">
+                            <img class="profile-image" src="{{ vich_uploader_asset(contact, 'imageFile') }}" alt="Photo de profil">
                         {% else %}
-                            <img src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil par défaut" style="height: 50px; width: 50px;">
+                            <img class="profile-image" src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil">
                         {% endif %}
                     </td>
                     <td>{{ contact.name }} {{ contact.firstname }}</td>

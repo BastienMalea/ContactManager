@@ -39,13 +39,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.imageName) }}
-            {{ form_widget(form.imageName) }}
-            <div class="form-error">
-                {{ form_errors(form.imageName) }}
-            </div>
-        </div>
+        {{ form_row(form.imageFile) }}
 
         <h3>Champs Personnalisés</h3>
         <div id="custom-fields-container"
