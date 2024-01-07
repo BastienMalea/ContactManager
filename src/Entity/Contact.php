@@ -39,8 +39,13 @@ class Contact
     )]
     private ?string $email = null;
 
+    #[Vich\UploadableField(mapping: 'contact_images', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageName = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'members')]
     private Collection $memberGroups;
@@ -107,16 +112,37 @@ class Contact
         return $this;
     }
 
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    public function setimageName(?string $imageName): static
+    public function setImageName(?string $imageName): static
     {
         $this->imageName = $imageName;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     /**
