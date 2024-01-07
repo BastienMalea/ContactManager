@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity(fields: ['name', 'firstname', 'phoneNumber'])]
+#[Vich\Uploadable]
 class Contact
 {
     #[ORM\Id]
@@ -37,7 +40,7 @@ class Contact
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo = null;
+    private ?string $imageName = null;
 
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'members')]
     private Collection $memberGroups;
@@ -104,14 +107,14 @@ class Contact
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getImageName(): ?string
     {
-        return $this->photo;
+        return $this->imageName;
     }
 
-    public function setPhoto(?string $photo): static
+    public function setimageName(?string $imageName): static
     {
-        $this->photo = $photo;
+        $this->imageName = $imageName;
 
         return $this;
     }

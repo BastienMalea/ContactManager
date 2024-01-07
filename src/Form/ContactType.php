@@ -72,7 +72,7 @@ class ContactType extends AbstractType
                 'by_reference' => false,
                 'prototype' => true,
             ])
-            ->add('photo', FileType::class, [
+            ->add('imageName', FileType::class, [
                 'label' => 'Photo de profil (fichier JPG/PNG/PDF)',
                 'mapped' => false,
                 'required' => false,
