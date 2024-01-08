@@ -41,6 +41,8 @@
 
         {{ form_row(form.imageFile) }}
 
+        <div id="image-preview"></div>
+
         <h3>Champs Personnalisés</h3>
         <div id="custom-fields-container"
              data-prototype="{{ form_widget(form.customFields.vars.prototype)|e('html_attr') }}">
@@ -63,6 +65,8 @@
         {{  form_row(form._token) }} {# On s'assure que le champ de token CSRF est rendu #}
         {{ form_end(form, {'render_rest': false}) }}
     </div>
+
+    <div id="image-preview"></div>
 
 {%  endblock %}
 

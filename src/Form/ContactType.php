@@ -78,7 +78,10 @@ class ContactType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                'required' => false
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
+                'image_uri' => true
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-4'],
