@@ -1,33 +1,44 @@
-
 document.addEventListener("DOMContentLoaded", function() {
-    console.log('Le script imagePreview est chargé');
-
     var imageInput = document.querySelector('#contact_imageFile_file');
     var imagePreview = document.querySelector('#image-preview');
-    var deleteButton = null; // Bouton de suppression
 
-    if(imageInput != null){
+    function createDeleteButton() {
+        var deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Supprimer l\'image';
+        deleteButton.className = 'btn btn-warning btn-custom-margin';
+        deleteButton.onclick = function() {
+            imageInput.value = '';
+            imagePreview.innerHTML = '';
+            deleteButton.remove();
+        };
+        return deleteButton;
+    }
+
+    if (imageInput) {
         imageInput.addEventListener('change', function(event) {
             var file = event.target.files[0];
             if (file) {
                 var reader = new FileReader();
-
                 reader.onload = function(e) {
                     imagePreview.innerHTML = '<img src="' + e.target.result + '" alt="Aperçu de l\'image" style="max-width: 200px; max-height: 200px;"/>';
-                    // Créer et ajouter le bouton de suppression
-                    deleteButton = document.createElement('button');
-                    deleteButton.innerText = 'Supprimer l\'image selectionné'
-                    deleteButton.className = 'btn btn-warning btn-custom-margin';
-                    deleteButton.onclick = function() {
-                        // Réinitialiser l'input de fichier et enlever l'aperçu
-                        imageInput.value = '';
-                        imagePreview.innerHTML = '';
-                        deleteButton.remove();
-                    };
-                    imagePreview.appendChild(deleteButton);
+                    imagePreview.appendChild(createDeleteButton());
                 };
                 reader.readAsDataURL(file);
             }
         });
     }
+
+    // Observer les modifications du DOM pour détecter l'ajout de l'image
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length > 0) {
+                var addedImage = mutation.addedNodes[0];
+                if (addedImage.tagName === 'IMG') {
+                    imagePreview.appendChild(createDeleteButton());
+                }
+            }
+        });
+    });
+
+    observer.observe(imagePreview, { childList: true });
 });

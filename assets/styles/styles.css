@@ -1,6 +1,6 @@
 .navbar-brand .fa-address-book {
-    color: #a9c6f5; /* Couleur de l'icône */
-    font-size: 35px; /* Taille de l'icône */
+    color: #a9c6f5;
+    font-size: 35px;
 }
 
 .profile-image {
@@ -20,4 +20,21 @@
 
 .custom-field-item {
     margin-bottom: 10px;
+}
+
+.custom-fields-row {
+    background-color: #f9f9f9;
+}
+
+.toggle-details-btn {
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.disabled-btn {
+    color: #b6becc;
+    cursor: not-allowed;
 }

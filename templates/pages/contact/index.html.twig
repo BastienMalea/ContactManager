@@ -19,21 +19,30 @@
         </div>
 
         <a href="{{ path('contact.new') }}" class="btn btn-primary"> Ajouter un nouveau contact</a>
-        
+
         <table class="table table-hover">
             <thead>
             <tr>
+                <th scope="col"></th> <!-- Colonne pour la flèche -->
                 <th scope="col">Photo de profil</th>
                 <th scope="col">Nom et Prénom</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Email</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col"></th> <!-- Modifier -->
+                <th scope="col"></th> <!-- Supprimer -->
             </tr>
             </thead>
             <tbody>
             {% for contact in contacts %}
-                <tr class="table-primary">
+                <!-- Ligne du contact -->
+                <tr class="table-primary contact-row">
+                    <td>
+                        {% if contact.customFields|length > 0 %}
+                            <button class="toggle-details-btn">+</button>
+                        {% else %}
+                            <button class="toggle-details-btn disabled-btn" disabled>+</button>
+                        {% endif %}
+                    </td>
                     <td>
                         {% if contact.imageName %}
                             <img class="profile-image" src="{{ vich_uploader_asset(contact, 'imageFile') }}" alt="Photo de profil">
@@ -58,6 +67,16 @@
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?');">Supprimer</a>
                     </td>
                 </tr>
+                <!-- Ligne des champs personnalisés -->
+                {% if contact.customFields|length > 0 %}
+                    <tr class="custom-fields-row" style="display: none;">
+                        <td colspan="7">
+                            {% for field in contact.customFields %}
+                                <div><strong>{{ field.name }}:</strong> {{ field.value }}</div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
@@ -66,4 +85,8 @@
     <div class="navigation d-flex justify-content-center">
         {{ knp_pagination_render(contacts) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('displayCustomFieldRow') }}
 {% endblock %}
