@@ -189,10 +189,8 @@ class Contact
         return $this;
     }
 
-    public function removeCustomField(CustomField $customField): static
+    public function removeCustomField(CustomField $customField): void
     {
         $this->customFields->removeElement($customField);
-
-        return $this;
     }
 }

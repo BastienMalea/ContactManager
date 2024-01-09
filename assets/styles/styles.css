@@ -8,3 +8,16 @@
     height: 50px;
     object-fit: cover;
 }
+
+.btn-custom-margin {
+    margin: 15px;
+}
+
+.custom-field-item label {
+    display: block;
+    margin-right: 10px;
+}
+
+.custom-field-item {
+    margin-bottom: 10px;
+}

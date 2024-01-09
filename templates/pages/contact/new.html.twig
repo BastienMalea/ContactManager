@@ -43,19 +43,12 @@
 
         <div id="image-preview"></div>
 
-        <h3>Champs Personnalisés</h3>
+        <h3>Champs personnalisés</h3>
+
         <div id="custom-fields-container"
              data-prototype="{{ form_widget(form.customFields.vars.prototype)|e('html_attr') }}">
-
-            {% for customFieldForm in form.customFields %}
-                <div class="custom-field-item">
-                    {{ form_row(customFieldForm.name) }}
-                    {{ form_row(customFieldForm.value) }}
-                    <button type="button" class="remove-custom-field btn btn-danger">Supprimer</button>
-                </div>
-            {% endfor %}
+            {# Les champs existants seront rendus ici #}
         </div>
-
         <button type="button" id="add-custom-field" class="btn btn-primary">Ajouter un champ personnalisé</button>
 
         <div class="form-group">
@@ -66,11 +59,10 @@
         {{ form_end(form, {'render_rest': false}) }}
     </div>
 
-    <div id="image-preview"></div>
 
 {%  endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/custom-fields.js') }}"></script>
+    {{ encore_entry_script_tags('custom-fields') }}
+    {{ encore_entry_script_tags('imagePreview') }}
 {% endblock %}

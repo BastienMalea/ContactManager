@@ -10,6 +10,4 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import 'bootstrap';
-
-import './js/imagePreview'
 import 'bootswatch/dist/solar/bootstrap.min.css';

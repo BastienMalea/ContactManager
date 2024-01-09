@@ -69,9 +69,7 @@ class ContactType extends AbstractType
                 'entry_type' => CustomFieldType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype' => true,
+                'allow_delete' => true
             ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de profil',
@@ -87,17 +85,6 @@ class ContactType extends AbstractType
                 'attr' => ['class' => 'btn btn-primary mt-4'],
                 'label' => $options['action_label']
             ]);
-
-
-
-
-
-//            ->add('memberGroups', EntityType::class, [
-//                'class' => Group::class,
-//'choice_label' => 'id',
-//'multiple' => true,
-//            ])
-//        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

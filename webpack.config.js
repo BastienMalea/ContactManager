@@ -22,6 +22,8 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('imagePreview', './assets/js/imagePreview.js')
+    .addEntry('custom-fields', './assets/js/custom-fields.js')
+
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Créer et ajouter le bouton de suppression
                     deleteButton = document.createElement('button');
                     deleteButton.innerText = 'Supprimer l\'image selectionné'
+                    deleteButton.className = 'btn btn-warning btn-custom-margin';
                     deleteButton.onclick = function() {
                         // Réinitialiser l'input de fichier et enlever l'aperçu
                         imageInput.value = '';
@@ -25,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     };
                     imagePreview.appendChild(deleteButton);
                 };
-
                 reader.readAsDataURL(file);
             }
         });
