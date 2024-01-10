@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Contact;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Contact>
@@ -16,33 +19,28 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContactRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $paginator;
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Contact::class);
+        $this->paginator= $paginator;
     }
 
-//    /**
-//     * @return Contact[] Returns an array of Contact objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findBySearch(SearchData $searchData): PaginationInterface
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->leftJoin('c.customFields', 'cf');
 
-//    public function findOneBySomeField($value): ?Contact
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($searchData->q)) {
+            $queryBuilder
+                ->andWhere('c.name LIKE :q OR c.firstname LIKE :q OR c.email LIKE :q OR c.phoneNumber LIKE :q OR cf.name LIKE :q OR cf.value LIKE :q')
+                ->setParameter('q', '%' . $searchData->q . '%');
+        }
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+
+        return $this->paginator->paginate($results, $searchData->page, 9);
+
+    }
 }

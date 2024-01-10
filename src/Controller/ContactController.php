@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -17,6 +19,21 @@ class ContactController extends AbstractController
     #[Route('/', name: 'contact.index' , methods: ['GET'])]
     public function index(ContactRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+
+        $form-> handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $searchData->page = $request->query->getInt('page', 1);
+            $dataFound = $repository->findBySearch($searchData);
+
+            return $this->render('pages/contact/index.html.twig', [
+                'form' => $form,
+                'contacts' => $dataFound
+            ]);
+        }
+
         $contacts = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1), /*page number*/
@@ -24,6 +41,7 @@ class ContactController extends AbstractController
         );
 
         return $this->render('pages/contact/index.html.twig', [
+            'form' => $form->createView(),
             'contacts' => $contacts,
         ]);
     }
