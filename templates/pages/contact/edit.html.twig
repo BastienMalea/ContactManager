@@ -44,8 +44,14 @@
             </div>
         </div>
 
-        {{ form_row(form.imageFile) }}
-        <div id="image-preview"></div>
+        <div class="form-group">
+            {{ form_label(form.imageFile) }}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control-file'}}) }}
+            {{ form_errors(form.imageFile) }}
+        </div>
+
+        <div id="image-preview" data-image-url="{{ form.imageFile.vars.data ? vich_uploader_asset(form.vars.data, 'imageFile') : '' }}"></div>
+        <input type="hidden" id="image_deleted" name="contact[imageDeleted]" value="0">
 
         <h3>Champs Personnalisés</h3>
         <div id="custom-fields-container"
@@ -74,5 +80,6 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('custom-fields') }}
+    {{ encore_entry_script_tags('styleVichUploaderElement') }}
     {{ encore_entry_script_tags('imagePreview') }}
 {% endblock %}

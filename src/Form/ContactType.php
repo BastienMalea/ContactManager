@@ -91,7 +91,8 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contact::class,
-            'action_label' => 'Submit'
+            'action_label' => 'Submit',
+            'allow_extra_fields' => true
         ]);
     }
 }

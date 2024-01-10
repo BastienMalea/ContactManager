@@ -84,8 +84,17 @@ class ContactController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
             $contact = $form->getData();
+            $postData = $request->request->all();
+            $imageDeleted = isset($postData['contact']['imageDeleted']) && $postData['contact']['imageDeleted'] === '1';
+            // Vérifie si on a supprimé l'image dans le formulaire
+            if ($imageDeleted) {
+                $contact->setImageName(null);
+                $contact->setImageFile(null);
+            }
+
             $manager->persist($contact);
             $manager->flush();
 
