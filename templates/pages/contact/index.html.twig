@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+    <h4 class="container mt-4">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
@@ -32,6 +32,7 @@
                 <th scope="col">Nom et Prénom</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Email</th>
+                <th scope="col">Groupes</th>
                 <th scope="col"></th> <!-- Modifier -->
                 <th scope="col"></th> <!-- Supprimer -->
             </tr>
@@ -41,7 +42,7 @@
                 <!-- Ligne du contact -->
                 <tr class="table-primary contact-row">
                     <td>
-                        {% if contact.customFields|length > 0 %}
+                        {% if contact.customFields|length > 0 or contact.groups|length > 0 %}
                             <button class="toggle-details-btn">+</button>
                         {% else %}
                             <button class="toggle-details-btn disabled-btn" disabled>+</button>
@@ -64,6 +65,9 @@
                         {% endif %}
                     </td>
                     <td>
+                        <button class="toggle-group-details-btn">+</button>
+                    </td>
+                    <td>
                         <a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-light ">Modifier</a>
                     </td>
                     <td>
@@ -72,9 +76,14 @@
                     </td>
                 </tr>
                 <!-- Ligne des champs personnalisés -->
-                {% if contact.customFields|length > 0 %}
-                    <tr class="custom-fields-row" style="display: none;">
-                        <td colspan="7">
+                {% if contact.customFields|length > 0  or contact.groups|length > 0 %}
+                    <tr class="group-custom-field-row" style="display: none;">
+                        <td colspan="8">
+                            <h4>Groupes :</h4>
+                            {% for group in contact.groups %}
+                                <span>{{ group.name }}</span>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                            <h4>Champs additionnels :</h4>
                             {% for field in contact.customFields %}
                                 <div><strong>{{ field.name }}:</strong> {{ field.value }}</div>
                             {% endfor %}
@@ -92,5 +101,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('displayCustomFieldRow') }}
+    {{ encore_entry_script_tags('displayGroupOrCustomFieldRow') }}
 {% endblock %}

@@ -1,4 +1,5 @@
 - Afficher les groupes du contact
+- Gérer la suppression des champs additionels
 - Gérer la modification des groupes
 - Gérer la suppression des groupes
 - Rendre cliquable les contacts via l'onglet groupe

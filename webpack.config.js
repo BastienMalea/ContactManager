@@ -22,12 +22,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('imagePreview', './assets/js/imagePreview.js')
-    .addEntry('custom-fields', './assets/js/custom-fields.js')
-    .addEntry('displayCustomFieldRow', './assets/js/displayCustomFieldRow.js')
+    .addEntry('addOrRemoveCustomFields', './assets/js/addOrRemoveCustomFields.js')
+    .addEntry('displayGroupOrCustomFieldRow', './assets/js/displayGroupOrCustomFieldRow.js')
     .addEntry('styleVichUploaderElement', './assets/js/styleVichUploaderElement.js')
     .addEntry('loadSelect2', './assets/js/loadSelect2.js')
-
-
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
