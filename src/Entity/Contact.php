@@ -47,15 +47,15 @@ class Contact
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'members')]
-    private Collection $memberGroups;
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'members', cascade: ['persist'])]
+    private Collection $groups;
 
     #[ORM\ManyToMany(targetEntity: CustomField::class, inversedBy: 'contacts', cascade: ['persist'])]
     private Collection $customFields;
 
     public function __construct()
     {
-        $this->memberGroups = new ArrayCollection();
+        $this->groups = new ArrayCollection();
         $this->customFields = new ArrayCollection();
     }
 
@@ -148,26 +148,26 @@ class Contact
     /**
      * @return Collection<int, Group>
      */
-    public function getMemberGroups(): Collection
+    public function getgroups(): Collection
     {
-        return $this->memberGroups;
+        return $this->groups;
     }
 
-    public function addMemberGroup(Group $memberGroup): static
+    public function addGroup(Group $group): static
     {
-        if (!$this->memberGroups->contains($memberGroup)) {
-            $this->memberGroups->add($memberGroup);
-            $memberGroup->addMember($this);
-            dump("Ajout du groupe : " . $memberGroup->getName());
+        if (!$this->groups->contains($group)) {
+            $this->groups->add($group);
+            $group->addMember($this);
+            dump("Ajout du groupe : " . $group->getName());
             die();
         }
         return $this;
     }
 
-    public function removeMemberGroup(Group $memberGroup): static
+    public function removeGroup(Group $group): static
     {
-        if ($this->memberGroups->removeElement($memberGroup)) {
-            $memberGroup->removeMember($this);
+        if ($this->groups->removeElement($group)) {
+            $group->removeMember($this);
         }
 
         return $this;

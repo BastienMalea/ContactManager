@@ -59,14 +59,14 @@ class ContactController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $contact = $form->getData();
 
-            $selectedGroupIds = $form->get('memberGroups')->getData();
-            foreach ($selectedGroupIds as $groupId) {
-
-                $group = $manager->getRepository(Group::class)->find($groupId);
-                if ($group) {
-                    $contact->addMemberGroup($group);
-                }
-            }
+//            $selectedGroupIds = $form->get('memberGroups')->getData();
+//            foreach ($selectedGroupIds as $groupId) {
+//
+//                $group = $manager->getRepository(Group::class)->find($groupId);
+//                if ($group) {
+//                    $contact->addMemberGroup($group);
+//                }
+//            }
 
             $manager->persist($contact);
             $manager->flush();

@@ -6,6 +6,7 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function Symfony\Component\Translation\t;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -19,7 +20,7 @@ class Group
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\ManyToMany(targetEntity: Contact::class, inversedBy: 'memberGroups')]
+    #[ORM\ManyToMany(targetEntity: Contact::class, inversedBy: 'groups')]
     private Collection $members;
 
     public function __construct()
@@ -56,6 +57,7 @@ class Group
     {
         if (!$this->members->contains($member)) {
             $this->members->add($member);
+            $member->addGroup($this);
         }
 
         return $this;
@@ -64,6 +66,7 @@ class Group
     public function removeMember(Contact $member): static
     {
         $this->members->removeElement($member);
+        $member->removeGroup($this);
 
         return $this;
     }

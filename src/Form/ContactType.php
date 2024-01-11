@@ -67,7 +67,7 @@ class ContactType extends AbstractType
                     new Assert\Email(['message' => 'L\'email "{{ value }}" n\'est pas un email valide.'])
                 ]
             ])
-            ->add('memberGroups', EntityType::class, [
+            ->add('groups', EntityType::class, [
                 'class' => Group::class,
                 'choice_label' => 'name', // le champ de l'entité Group à afficher dans les options
                 'multiple' => true, // permet de sélectionner plusieurs groupes
