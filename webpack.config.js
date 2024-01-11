@@ -26,6 +26,7 @@ Encore
     .addEntry('displayGroupOrCustomFieldRow', './assets/js/displayGroupOrCustomFieldRow.js')
     .addEntry('styleVichUploaderElement', './assets/js/styleVichUploaderElement.js')
     .addEntry('loadSelect2', './assets/js/loadSelect2.js')
+    .addEntry('displayMembers', './assets/js/displayMembers.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

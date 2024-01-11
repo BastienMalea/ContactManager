@@ -19,6 +19,7 @@
             <thead>
             <tr>
                 <th scope="col">Nom</th>
+                <th scope="col">Membre(s)</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -27,20 +28,53 @@
             {% for group in groups %}
                 <tr class="table-primary">
                     <td>{{ group.name }}</td>
-{#                    <td>#}
-{#                        <a href="{{ path('group.edit', {'id': group.id}) }}" class="btn btn-info ">Modifier</a>#}
-{#                    </td>#}
+                    <td>
+                        <div class="d-flex align-items-center">
+                            {% for member in group.members|slice(0, 4) %}
+                                {% if member.imageName %}
+                                    <img src="{{ vich_uploader_asset(member, 'imageFile') }}" class="profile-image" alt="Photo de profil">
+                                {% else %}
+                                    <img class="profile-image" src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil">
+                                {% endif %}
+                            {% endfor %}
+                            <button class="toggle-details-btn">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('group.edit', {'id': group.id}) }}" class="btn btn-light ">Modifier</a>
+                    </td>
                     <td>
                         <a href="{{ path('group.delete', {'id': group.id}) }}" class="btn btn-warning"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">Supprimer</a>
+                    </td>
+                </tr>
+                <!-- Ligne détaillée des membres du groupe -->
+                <tr class="group-members-row" style="display: none;">
+                    <td colspan="4">
+                        <div class="group-members">
+                            <h3>Membres du groupe :</h3>
+                            {% for member in group.members %}
+                                <div class="member-detail">
+                                    {% if member.imageName %}
+                                        <img src="{{ vich_uploader_asset(member, 'imageFile') }}" class="profile-image" alt="Photo de profil">
+                                    {% else %}
+                                        <img class="profile-image" src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil">
+                                    {% endif %}
+                                    <span>{{ member.name }} {{ member.firstname }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    {# display navigation #}
     <div class="navigation d-flex justify-content-center">
         {{ knp_pagination_render(groups) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('displayMembers') }}
 {% endblock %}
