@@ -48,6 +48,7 @@ class Contact
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'members', cascade: ['persist'])]
+    #[ORM\JoinTable(name: "contact_group")]
     private Collection $groups;
 
     #[ORM\ManyToMany(targetEntity: CustomField::class, inversedBy: 'contacts', cascade: ['persist'])]

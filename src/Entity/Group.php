@@ -20,7 +20,7 @@ class Group
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\ManyToMany(targetEntity: Contact::class, inversedBy: 'groups')]
+    #[ORM\ManyToMany(targetEntity: Contact::class, mappedBy: 'groups')]
     private Collection $members;
 
     public function __construct()
