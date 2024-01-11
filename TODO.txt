@@ -1,5 +1,7 @@
-- Feature Ajout d'un champ supplémentaire créer par l'user au moment de la création / modification d'un utilisateur
-- Feature Ajout d'une photo selon certaisn format lors du formulaire de création / modification
-- Feature Ajout de la création d'un groupe pour les contacts
-- Ajout de la fonction de recherche (par champ sur le contact et par champs supplémentaires)
-- Rendre le site plus user-friendly
+- Afficher les groupes du contact
+- Gérer la modification des groupes
+- Gérer la suppression des groupes
+- Rendre cliquable les contacts via l'onglet groupe
+- Afficher les contacts du groupe (pdp si possible)
+- Tester les fonctionnalités du site
+- Refacto le site
