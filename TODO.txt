@@ -1,8 +1,8 @@
-- Afficher les groupes du contact
 - Gérer la suppression des champs additionels
 - Gérer la modification des groupes
 - Gérer la suppression des groupes
 - Rendre cliquable les contacts via l'onglet groupe
+- Rendre cliquable les groupees via la row hidden
 - Afficher les contacts du groupe (pdp si possible)
 - Tester les fonctionnalités du site
 - Refacto le site

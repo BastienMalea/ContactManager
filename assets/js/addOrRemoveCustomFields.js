@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-    console.log("Custom Field loaded");
     let container = document.getElementById('custom-fields-container');
     if (!container) {
         return;
     }
+
+    // Ajout de boutons de suppression aux champs existants
+    let existingFields = container.querySelectorAll('.custom-field-item');
+    existingFields.forEach(addRemoveButtonToField);
 
     let addCustomFieldButton = document.getElementById('add-custom-field');
     if (!addCustomFieldButton) {
@@ -46,5 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
             event.target.closest('.custom-field-item').remove();
         }
     });
+
+    function addRemoveButtonToField(field) {
+        var removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.textContent = 'Supprimer';
+        removeButton.classList.add('remove-custom-field', 'btn', 'btn-danger');
+        field.appendChild(removeButton);
+    }
 
 });
