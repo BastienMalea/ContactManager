@@ -158,8 +158,9 @@ class Contact
         if (!$this->memberGroups->contains($memberGroup)) {
             $this->memberGroups->add($memberGroup);
             $memberGroup->addMember($this);
+            dump("Ajout du groupe : " . $memberGroup->getName());
+            die();
         }
-
         return $this;
     }
 

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Contact;
+use App\Entity\Group;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -64,6 +66,13 @@ class ContactType extends AbstractType
                     ]),
                     new Assert\Email(['message' => 'L\'email "{{ value }}" n\'est pas un email valide.'])
                 ]
+            ])
+            ->add('memberGroups', EntityType::class, [
+                'class' => Group::class,
+                'choice_label' => 'name', // le champ de l'entité Group à afficher dans les options
+                'multiple' => true, // permet de sélectionner plusieurs groupes
+                'expanded' => false, // false pour une liste déroulante, true pour des cases à cocher
+                'label' => 'Groupe(s) du contact'// le label du champ
             ])
             ->add('customFields', CollectionType::class, [
                 'entry_type' => CustomFieldType::class,

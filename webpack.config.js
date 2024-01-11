@@ -25,6 +25,8 @@ Encore
     .addEntry('custom-fields', './assets/js/custom-fields.js')
     .addEntry('displayCustomFieldRow', './assets/js/displayCustomFieldRow.js')
     .addEntry('styleVichUploaderElement', './assets/js/styleVichUploaderElement.js')
+    .addEntry('loadSelect2', './assets/js/loadSelect2.js')
+
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Entity\Group;
 use App\Form\ContactType;
 use App\Form\SearchType;
 use App\Model\SearchData;
@@ -56,8 +57,16 @@ class ContactController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-
             $contact = $form->getData();
+
+            $selectedGroupIds = $form->get('memberGroups')->getData();
+            foreach ($selectedGroupIds as $groupId) {
+
+                $group = $manager->getRepository(Group::class)->find($groupId);
+                if ($group) {
+                    $contact->addMemberGroup($group);
+                }
+            }
 
             $manager->persist($contact);
             $manager->flush();

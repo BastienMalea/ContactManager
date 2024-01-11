@@ -54,3 +54,7 @@ label[for="contact_imageFile_delete"] {
     margin-left: 10px;
     display: none;
 }
+
+.custom-select-class {
+    height: 150px;
+}
