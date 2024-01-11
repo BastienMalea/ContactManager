@@ -6,7 +6,6 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use function Symfony\Component\Translation\t;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -20,7 +19,8 @@ class Group
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\ManyToMany(targetEntity: Contact::class, mappedBy: 'groups')]
+    #[ORM\ManyToMany(targetEntity: Contact::class, mappedBy: 'groups', cascade: ['persist'])]
+    #[ORM\JoinTable(name: "contact_group")]
     private Collection $members;
 
     public function __construct()
@@ -59,7 +59,6 @@ class Group
             $this->members->add($member);
             $member->addGroup($this);
         }
-
         return $this;
     }
 

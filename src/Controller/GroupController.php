@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Group;
 use App\Form\GroupType;
+use App\Repository\ContactRepository;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,7 +31,7 @@ class GroupController extends AbstractController
     }
 
     #[Route('/group/new', name: 'group.new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager) : Response{
+    public function new(Request $request, EntityManagerInterface $manager, ContactRepository $repository) : Response{
 
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
@@ -37,6 +39,14 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $group = $form->getData();
+
+            $memberIds = $form->get('members')->getData();
+            foreach ($memberIds as $memberId) {
+                $member = $repository -> find($memberId);
+                if ($member) {
+                    $group->addMember($member);
+                }
+            }
             $manager->persist($group);
             $manager->flush();
 

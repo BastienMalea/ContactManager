@@ -27,23 +27,20 @@ class GroupType extends AbstractType
                 ]
             ])
             ->add('members', EntityType::class, [
-                'label' => 'Sélectionner les contacts que vous souhaitez ajouter dans le groupe',
+                'label' => 'Sélectionner les contacts à ajouter dans le groupe',
                 'class' => Contact::class,
                 'choice_label' => function(Contact $contact) {
                     return $contact->getName() . ' ' . $contact->getFirstname() . ' ' . $contact->getPhoneNumber();
                 },
                 'multiple' => true,
                 'expanded' => false,
-                'attr' => ['class' => 'form-control custom-select-multiple', 'style' => 'height:300px'],
+                'by_reference' => false,
+                'attr' => ['class' => 'form-control select2-multiple contact-select'],
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC'); // Trie les contacts par nom en ordre alphabétique
+                    return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },
                 'constraints' => [
-                    new Assert\Count([
-                        'min' => 1,
-                        'minMessage' => 'Vous devez sélectionner au moins un membre.'
-                    ])
+                    new Assert\Count(['min' => 1, 'minMessage' => 'Vous devez sélectionner au moins un membre.'])
                 ]
             ])
             ->add('submit', SubmitType::class, [
