@@ -58,8 +58,13 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $group = $form->getData();
-
             $memberIds = $form->get('members')->getData();
+
+            if (count($memberIds) === 0) {
+                $this->addFlash('error', 'Vous devez ajouter au moins un membre pour créer un groupe.');
+                return $this->redirectToRoute('group.new');
+            }
+
             foreach ($memberIds as $memberId) {
                 $member = $repository -> find($memberId);
                 if ($member) {
@@ -133,6 +138,14 @@ class GroupController extends AbstractController
         }
 
         $group->removeMember($member);
+
+        // Vérification si le groupe est vide
+        if (count($group->getMembers()) === 0) {
+            $entityManager->remove($group);
+        } else {
+            $entityManager->persist($group);
+        }
+
         $entityManager->flush();
 
         $this->addFlash(

@@ -1,5 +1,3 @@
 - Gérer la suppression des groupes
-- Rendre cliquable les contacts via l'onglet groupe
-- Rendre cliquable les groupes via la row hidden
 - Tester les fonctionnalités du site
 - Refacto le site
