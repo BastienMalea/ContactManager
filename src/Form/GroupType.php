@@ -45,7 +45,7 @@ class GroupType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-4'],
-                'label' => 'Ajouter le groupe'
+                'label' => $options['action_label']
             ]);
     }
 
@@ -53,6 +53,7 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Group::class,
+            'action_label' => 'Submit',
         ]);
     }
 }

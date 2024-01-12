@@ -34,7 +34,9 @@ class GroupController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager, ContactRepository $repository) : Response{
 
         $group = new Group();
-        $form = $this->createForm(GroupType::class, $group);
+        $form = $this->createForm(GroupType::class, $group, [
+            'action_label' => 'Ajouter le groupe'
+        ]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -65,7 +67,11 @@ class GroupController extends AbstractController
 
     #[Route('/group/edit/{id}', name: 'group.edit', methods: ['GET', 'POST'])]
     public function update(Group $group, Request $request, EntityManagerInterface $manager) : Response{
-        $form = $this->createForm(GroupType::class, $group);
+
+        $form = $this->createForm(GroupType::class, $group, [
+            'action_label' => 'Modifier le groupe'
+        ]);
+
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $group = $form->getData();
