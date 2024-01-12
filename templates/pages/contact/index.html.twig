@@ -13,7 +13,8 @@
         <h1>Mes contacts</h1>
 
         {% include "components/_search_data.html.twig" with {
-            form:form
+            form:form,
+            reset_url: path('contact.index')
         } only %}
 
         <div class="count mt-4">
