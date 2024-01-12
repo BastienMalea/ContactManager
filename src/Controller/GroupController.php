@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Entity\Group;
 use App\Form\GroupType;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Repository\ContactRepository;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +21,20 @@ class GroupController extends AbstractController
     #[Route('/group', name: 'group.index', methods: ['GET'])]
     public function index(GroupRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $searchData->page = $request->query->getInt('page', 1);
+            $dataFound = $repository->findBySearch($searchData);
+
+            return $this->render('pages/group/index.html.twig', [
+                'form' => $form,
+                'groups' => $dataFound
+            ]);
+        }
+
         $groups = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1),
@@ -26,6 +42,7 @@ class GroupController extends AbstractController
         );
 
         return $this->render('pages/group/index.html.twig', [
+            'form' => $form->createView(),
             'groups' => $groups,
         ]);
     }

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <h4 class="container mt-4">
+    <div class="container mt-4">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
@@ -32,7 +32,6 @@
                 <th scope="col">Nom et Prénom</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Email</th>
-                <th scope="col">Groupes</th>
                 <th scope="col"></th> <!-- Modifier -->
                 <th scope="col"></th> <!-- Supprimer -->
             </tr>
@@ -65,9 +64,6 @@
                         {% endif %}
                     </td>
                     <td>
-                        <button class="toggle-group-details-btn">+</button>
-                    </td>
-                    <td>
                         <a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-light ">Modifier</a>
                     </td>
                     <td>
@@ -78,7 +74,7 @@
                 <!-- Ligne des champs personnalisés -->
                 {% if contact.customFields|length > 0  or contact.groups|length > 0 %}
                     <tr class="group-custom-field-row" style="display: none;">
-                        <td colspan="8">
+                        <td colspan="7">
                             <h4>Groupes :</h4>
                             {% for group in contact.groups %}
                                 <span>{{ group.name }}</span>{% if not loop.last %}, {% endif %}
@@ -94,7 +90,6 @@
             </tbody>
         </table>
     </div>
-    {# display navigation #}
     <div class="navigation d-flex justify-content-center">
         {{ knp_pagination_render(contacts) }}
     </div>

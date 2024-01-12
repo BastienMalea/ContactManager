@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Group;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Group>
@@ -16,33 +19,26 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GroupRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $paginator;
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Group::class);
+        $this->paginator= $paginator;
     }
 
-//    /**
-//     * @return Group[] Returns an array of Group objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findBySearch(SearchData $searchData): PaginationInterface
+    {
+        $queryBuilder = $this->createQueryBuilder('g');
 
-//    public function findOneBySomeField($value): ?Group
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($searchData->q)) {
+            $queryBuilder
+                ->andWhere('g.name LIKE :q')
+                ->setParameter('q', '%' . $searchData->q . '%');
+        }
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+
+        return $this->paginator->paginate($results, $searchData->page, 9);
+    }
 }

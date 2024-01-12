@@ -7,6 +7,10 @@
     <div class="container mt-4">
         <h1>Mes groupes</h1>
 
+        {% include "components/_search_data.html.twig" with {
+            form:form
+        } only %}
+
         <div class="count mt-4">
             <h4>
                 Il y a {{ groups.getTotalItemCount }} groupes au total
