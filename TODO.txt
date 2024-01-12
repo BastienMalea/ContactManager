@@ -1,6 +1,5 @@
 - Gérer la suppression des groupes
 - Rendre cliquable les contacts via l'onglet groupe
 - Rendre cliquable les groupes via la row hidden
-- Faire une barre de recherche pour les groupes
 - Tester les fonctionnalités du site
 - Refacto le site

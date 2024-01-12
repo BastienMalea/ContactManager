@@ -121,4 +121,25 @@ class GroupController extends AbstractController
 
         return $this->redirectToRoute('group.index');
     }
+
+    #[Route('/group/{groupId}/remove-member/{memberId}', name: 'group.remove.member', methods: ['GET'])]
+    public function removeMemberFromGroup($groupId, $memberId, EntityManagerInterface $entityManager) : Response
+    {
+        $group = $entityManager->getRepository(Group::class)->find($groupId);
+        $member = $entityManager->getRepository(Contact::class)->find($memberId);
+
+        if (!$group || !$member) {
+            throw $this->createNotFoundException('Le groupe ou le membre n\'a pas été trouvé.');
+        }
+
+        $group->removeMember($member);
+        $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Le membre a bien été supprimé du groupe !'
+        );
+
+        return $this->redirectToRoute('group.index');
+    }
 }

@@ -66,6 +66,9 @@
                                         <img class="profile-image" src="{{ asset('assets/Default_pfp.jpg') }}" alt="Photo de profil">
                                     {% endif %}
                                     <span>{{ member.name }} {{ member.firstname }}</span>
+
+                                    <a href="{{ path('contact.edit', {'id': member.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
+                                    <a href="{{ path('group.remove.member', {'groupId': group.id, 'memberId': member.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact du groupe ?');">Supprimer du groupe</a>
                                 </div>
                             {% endfor %}
                         </div>
