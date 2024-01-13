@@ -36,7 +36,7 @@ class GroupController extends AbstractController
         }
 
         $groups = $paginator->paginate(
-            $repository->findAll(),
+            $repository->findAllOrderByCreatedAt(),
             $request->query->getInt('page', 1),
             5
         );

@@ -69,10 +69,11 @@ class ContactType extends AbstractType
             ])
             ->add('groups', EntityType::class, [
                 'class' => Group::class,
-                'choice_label' => 'name', // le champ de l'entité Group à afficher dans les options
-                'multiple' => true, // permet de sélectionner plusieurs groupes
-                'expanded' => false, // false pour une liste déroulante, true pour des cases à cocher
-                'label' => 'Groupe(s) du contact'// le label du champ
+                'choice_label' => 'name',
+                'required' => false,
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'Groupe(s) du contact'
             ])
             ->add('customFields', CollectionType::class, [
                 'entry_type' => CustomFieldType::class,

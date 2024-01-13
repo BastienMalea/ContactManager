@@ -66,3 +66,10 @@ label[for="contact_imageFile_delete"] {
     height: 35px !important;
 }
 
+.form-error {
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+

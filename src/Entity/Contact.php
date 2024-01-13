@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity(fields: ['name', 'firstname', 'phoneNumber'])]
+#[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
 class Contact
 {
@@ -34,9 +36,7 @@ class Contact
     private string $phoneNumber;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Assert\Email(
-        message: 'email {value} non valide'
-    )]
+    #[Assert\Length(min: 2, max: 70)]
     private ?string $email = null;
 
     #[Vich\UploadableField(mapping: 'contact_images', fileNameProperty: 'imageName')]
@@ -46,6 +46,9 @@ class Contact
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'members', cascade: ['persist'])]
     #[ORM\JoinTable(name: "contact_group")]
@@ -146,6 +149,19 @@ class Contact
         return $this->updatedAt;
     }
 
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Group>
      */
@@ -192,5 +208,19 @@ class Contact
     public function removeCustomField(CustomField $customField): void
     {
         $this->customFields->removeElement($customField);
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist() : void
+    {
+        if (!$this->createdAt) {
+            $this->createdAt = new DateTimeImmutable();
+        }
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate() : void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 }

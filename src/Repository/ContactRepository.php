@@ -43,4 +43,13 @@ class ContactRepository extends ServiceEntityRepository
         return $this->paginator->paginate($results, $searchData->page, 9);
 
     }
+
+    public function findAllOrderByCreatedAt()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

@@ -36,7 +36,7 @@ class ContactController extends AbstractController
         }
 
         $contacts = $paginator->paginate(
-            $repository->findAll(),
+            $repository->findAllOrderByCreatedAt(),
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
@@ -58,7 +58,6 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $contact = $form->getData();
-
             $manager->persist($contact);
             $manager->flush();
 

@@ -72,18 +72,27 @@
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?');">Supprimer</a>
                     </td>
                 </tr>
-                <!-- Ligne des champs personnalisés -->
+                <!-- Ligne des groupes et des champs personnalisés -->
                 {% if contact.customFields|length > 0  or contact.groups|length > 0 %}
                     <tr class="group-custom-field-row" style="display: none;">
                         <td colspan="7">
                             <h4>Groupes :</h4>
-                            {% for group in contact.groups %}
-                                <span>{{ group.name }}</span>{% if not loop.last %}, {% endif %}
-                            {% endfor %}
+                            {% if contact.groups|length > 0 %}
+                                {% for group in contact.groups %}
+                                    <span>{{ group.name }}</span>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <span>Ce membre n'a pas de groupe.</span>
+                            {% endif %}
+
                             <h4>Champs additionnels :</h4>
-                            {% for field in contact.customFields %}
-                                <div><strong>{{ field.name }}:</strong> {{ field.value }}</div>
-                            {% endfor %}
+                            {% if contact.customFields|length > 0 %}
+                                {% for field in contact.customFields %}
+                                    <div><strong>{{ field.name }}:</strong> {{ field.value }}</div>
+                                {% endfor %}
+                            {% else %}
+                                <span>Ce membre n'a pas de champs additionnels.</span>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endif %}
