@@ -44,14 +44,10 @@
 }
 
 #contact_imageFile_delete {
-    transform: scale(1.5);
-    margin: 8px;
     display: none;
 }
 
 label[for="contact_imageFile_delete"] {
-    font-size: 20px;
-    margin-left: 10px;
     display: none;
 }
 

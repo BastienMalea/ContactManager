@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Load select2");
 
     $('.select2-multiple').each(function() {
         var placeholderText = "Sélectionnez des options";

@@ -1,5 +1,4 @@
 - Ajouter une possibilité de trier dans le tableau les données (chaque colonne idéalement)
 - Modifier un contact uniquement si on la modifié vraiment du détail ça
-- Quand on créer un contact il faut que ça soit le premier sur la liste des contacts si pas de filtre sur le tableau
 - Tester les fonctionnalités du site
 - Refacto le site

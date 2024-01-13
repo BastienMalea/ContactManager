@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function updateImagePreview(file) {
-        console.log("UpdateImage");
         var reader = new FileReader();
         reader.onload = function(e) {
             imagePreview.innerHTML = '<img src="' + e.target.result + '" style="max-width: 200px; max-height: 200px;"/>';
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     imageInput.addEventListener('change', function(event) {
-        console.log("UpdateImage");
         var file = event.target.files[0];
         if (file) {
             updateImagePreview(file);

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ajout de boutons de suppression aux champs existants
     let existingFields = container.querySelectorAll('.custom-field-item');
-    existingFields.forEach(addRemoveButtonToField);
+    existingFields.forEach(createRemoveButton);
 
     let addCustomFieldButton = document.getElementById('add-custom-field');
     if (!addCustomFieldButton) {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addCustomFieldButton.addEventListener('click', function() {
         let prototype = container.getAttribute('data-prototype');
         let index = container.querySelectorAll('.custom-field-item').length;
-        let newFieldHtml = prototype.replace(/__name__/g, index);
+        let newFieldHtml = prototype.replace(/__name__/g, index.toString());
         let newField = document.createElement('div');
         newField.classList.add('custom-field-item');
         newField.innerHTML = newFieldHtml;
@@ -34,12 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Ajout du bouton de suppression
-        var removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.textContent = 'Supprimer';
-        removeButton.classList.add('remove-custom-field', 'btn', 'btn-danger');
-        newField.appendChild(removeButton);
-
+        createRemoveButton(newField);
         container.appendChild(newField);
     });
 
@@ -49,12 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function addRemoveButtonToField(field) {
+    function createRemoveButton(field) {
         var removeButton = document.createElement('button');
         removeButton.type = 'button';
         removeButton.textContent = 'Supprimer';
         removeButton.classList.add('remove-custom-field', 'btn', 'btn-danger');
         field.appendChild(removeButton);
+        return removeButton;
     }
 
 });
